@@ -34,11 +34,12 @@ public class LoginTest extends Testbase {
 	public void validateLoginPage() {
 		boolean flag = loginpage.validateLoginPage();
 		Assert.assertTrue(flag, "Login page img not validated");
+		
 	}
 
-	@Test(priority = 3)
+	@Test(priority = 3, groups= {"smoke"})
 	public void loginToCredentials() {
-		homepage = loginpage.login(prop.getProperty("username"), prop.getProperty("password"));
+		loginpage.login(prop.getProperty("username"),prop.getProperty("password"))	;
 	}
 
 	@AfterMethod

@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Admin module Suite">
+	<test name="UserManagement">
+		
+		
+		<classes>
+			<class name="com.dru.qa.registration.testcases.hyrpractise2" />
+		</classes>
+		
+	</test>
+</suite>

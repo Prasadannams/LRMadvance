@@ -1,0 +1,23 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Admin module Suite">
+	<test name="UserManagement">
+		<groups>
+			<define name="ReleaseBuild">
+				<include name="smoke" />
+			</define>
+			<run>
+				<include name="ReleaseBuild" />
+				<exclude name="regression" />
+								<exclude name="sanity" />
+
+
+			</run>
+		</groups>
+		
+		<classes>
+			<class name="com.dru.qa.registration.testcases.hyrpractise" />
+		</classes>
+		
+	</test>
+</suite>

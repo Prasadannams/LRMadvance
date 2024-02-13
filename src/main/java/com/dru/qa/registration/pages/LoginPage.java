@@ -1,23 +1,26 @@
 package com.dru.qa.registration.pages;
 
-import java.time.Duration;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.log4testng.Logger;
 
-import com.dru.qa.registration.base.Testbase;
 import com.dru.qa.registration.helpers.Helpers;
 
 public class LoginPage extends Helpers{
+	
+	WebDriver _driver;
+	Logger logger= Logger.getLogger(LoginPage.class);
+	
+	public Helpers helpers;
 	
 	//create a PageFactory	
 	@FindBy(xpath=("//img[@class='logo-size']"))
 	WebElement druLogo;
 	
-	@FindBy(xpath=("//input[@class='form-control ng-pristine ng-invalid ng-touched' and @formcontrolname='UserName']"))
+	@FindBy(xpath=("//input[@formcontrolname='UserName']"))
 	WebElement userName;
 	
 	@FindBy(xpath=("//*[@class='form-control ng-untouched ng-pristine ng-valid']"))
@@ -34,7 +37,9 @@ public class LoginPage extends Helpers{
 	
 	//Initialize page objects
 	public LoginPage() {
+		this._driver = driver;
 		PageFactory.initElements(driver, this);
+		 helpers = new Helpers();
 	}
 	
 	//Create a Action Methods
@@ -46,28 +51,26 @@ public class LoginPage extends Helpers{
 	public boolean validateLoginPage() {
 		
 		return isDisplay(druLogo);
-		
 	
 	}
 	
-	public HomePage login(String un , String pwd) {
-		
-		explicitWait(50, userName);
-        sendKeys(userName, un, passWord, pwd);
-		loginButton.click();
-		String popup = otherDevice.getText();
+	public HomePage login(String username , String pwd) {
+        helpers.implicitWait(3);
+        logger.info("Waiting for fw seconds");
+        helpers.sendKeys(userName, username);
+        helpers.sendKeys(passWord, pwd);
+        helpers.performClick(loginButton);
 		try {
-		if(popup.equals("Log out of other device?")) {
-			accept.click();
-		}else {
-			loginButton.click();
+			if(otherDevice.isDisplayed()) {
+				accept.click();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		}catch(Exception e){
-			
-		}
+		
 		return new HomePage();
+		
+		
 	}
-
-	
 
 }

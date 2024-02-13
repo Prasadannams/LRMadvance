@@ -1,6 +1,10 @@
 package com.dru.qa.registration.base;
 
 import java.io.FileInputStream;
+
+import org.openqa.selenium.support.events.EventFiringDecorator;
+import org.openqa.selenium.support.events.WebDriverListener;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
@@ -10,12 +14,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import com.dru.qa.registration.util.Eventlisteners;
 import com.dru.qa.registration.util.Testutil;
 
 public class Testbase {
 
 	public static WebDriver driver;
 	public static Properties prop;
+
 	FileInputStream file = null;
 
 	public Testbase() {
@@ -47,9 +53,12 @@ public class Testbase {
 			driver = new FirefoxDriver();
 		}
 
+		WebDriverListener listeners = new Eventlisteners();
+		driver = new EventFiringDecorator<WebDriver>(listeners).decorate(driver);
+
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
-		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(Testutil.page_load));
+//		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(Testutil.page_load));
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Testutil.implict_wait));
 		driver.get(prop.getProperty("url"));
 

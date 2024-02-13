@@ -7,7 +7,6 @@
         <methods>
           <include name="validateUsers" invocation-numbers="0"/>
           <include name="setup"/>
-          <include name="teardown"/>
         </methods>
       </class> <!-- com.dru.qa.registration.testcases.UserManagementTest -->
     </classes>
